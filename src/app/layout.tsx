@@ -11,7 +11,7 @@ const urbanist = Urbanist({
   display: "swap",
 });
 export const metadata: Metadata = {
-  title: "NEONIX",
+  title: "NEONIX 2",
   description: "BIENVENIDO A NEONIX",
 };
 export default function RootLayout({
