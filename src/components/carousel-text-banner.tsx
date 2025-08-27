@@ -8,20 +8,20 @@ import Autoplay from "embla-carousel-autoplay";
 export const dataCarouselTop = [
     {
         id: 1,
-        title: "Envio en 24 horas",
-        description: "Como cliente VIP, recibirás tu pedido en 24 horas. Obten mas informacion y Unete a nuestro programa de fidelidad.",
+        title: "Envío en 24 horas",
+        description: "Como cliente VIP, recibirás tu pedido en 24 horas. Obtén más información y únete a nuestro programa de fidelidad.",
         link: "#"
     },
     {
         id: 2,
-        title: "consigue hasta un 25% de descuento por la compra de 3 prendas",
+        title: "Consigue hasta un 25% de descuento por la compra de 3 prendas",
         description: "50% por compras superiores a 10 prendas.",
         link: "#"
     },
     {
         id: 3,
         title: "Devoluciones y entregas gratuitas",
-        description: "Como cliente , tienes envios y devoluciones gratis en un plazo de 5 dias.",
+        description: "Como cliente , tienes envíos y devoluciones gratis en un plazo de 5 días.",
         link: "#"
     }, {
         id: 4,
@@ -34,7 +34,7 @@ const CarouselTextBanner = () => {
     const router = useRouter();
 
     return (
-        <div className="bg-orange-600 dark:bg-primary">
+        <div className="bg-orange-600 dark:bg-primary relative z-10">
             <Carousel className="w-full max-w-4xl mx-auto"
                 plugins={[
                     Autoplay({
