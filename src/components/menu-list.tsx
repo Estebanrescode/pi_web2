@@ -16,7 +16,7 @@ import {
 
 export const MenuList = () => {
   return (
-    <NavigationMenu viewport={false}>
+    <NavigationMenu viewport={false} className="relative z-50">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Sobre nosotros</NavigationMenuTrigger>
@@ -32,25 +32,25 @@ export const MenuList = () => {
                         NEONIX
                     </div>
                     <p className="text-sm leading-tight">
-                      Vistete a la moda con nuestra ropa urbana
+                      Vístete a la moda con nuestra ropa urbana
                     </p>
                   </Link>
                 </NavigationMenuLink>
               </li>
               <ListItem href="/shop" title="Tienda">
-                Accede a tu informacion, tus pedidos y mucho mas
+                Accede a tu información, tus pedidos y mucho más
               </ListItem>
               <ListItem href="/offers" title="Ofertas">
-                Seccion dedicada a promociones y descuentos especiales
+                Sección dedicada a promociones y descuentos especiales
               </ListItem>
-              <ListItem href="/" title="Accesorios">
-                Productos complementarios como relojes, gafas...etc
+              <ListItem href="/" title="Productos destacados">
+                Los productos más populares y exclusivos
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Catalogo</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
@@ -83,18 +83,27 @@ export const MenuList = () => {
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "HOMBRES",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "",
+    title: "Buzos",
+    href: "/buzos",
+    description: "Variedad de buzos con estilos urbanos.",
   },
   {
-    title: "MUJERES",
-    href: "/docs/primitives/hover-card",
-    description:
-      "",
+    title: "Camisetas",
+    href: "/camisetas",
+    description: "Camisetas para todos los gustos y estilos.",
   },
-]
+  {
+    title: "Pantalones",
+    href: "/pantalones",
+    description: "Pantalones cómodos y modernos.",
+  },
+  {
+    title: "Accesorios",
+    href: "/accesorios",
+    description: "Complementos que marcan la diferencia.",
+  },
+];
+
 function ListItem({
   title,
   children,
