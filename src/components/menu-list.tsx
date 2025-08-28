@@ -97,11 +97,6 @@ const components: { title: string; href: string; description: string }[] = [
     href: "/pantalones",
     description: "Pantalones cómodos y modernos.",
   },
-  {
-    title: "Accesorios",
-    href: "/accesorios",
-    description: "Complementos que marcan la diferencia.",
-  },
 ];
 
 function ListItem({

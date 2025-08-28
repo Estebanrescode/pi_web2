@@ -1,7 +1,7 @@
 // app/components/productsData.ts
 
 const products = [
-  // ⭐ Productos Destacados
+  // Productos Destacados
   {
     id: 1,
     name: "Set Midnight Drop",
@@ -33,7 +33,7 @@ const products = [
     category: "destacados",
   },
 
-  // 👕 Buzos
+  // Buzos
   {
     id: 6,
     name: "Buzo Street Vibe",
@@ -65,7 +65,7 @@ const products = [
     category: "buzos",
   },
 
-  // 👕 Camisetas
+  // Camisetas
   {
     id: 11,
     name: "Camiseta Core Street",
@@ -97,7 +97,7 @@ const products = [
     category: "camisas",
   },
 
-  // 👖 Pantalones
+  // Pantalones
   {
     id: 16,
     name: "Jogger Grind Mode",
@@ -129,7 +129,7 @@ const products = [
     category: "pantalones",
   },
 
-  // 🎒 Accesorios
+  // Accesorios
   {
     id: 21,
     name: "Gorra Concrete",
