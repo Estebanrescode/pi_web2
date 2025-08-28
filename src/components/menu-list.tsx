@@ -96,7 +96,7 @@ const components: { title: string; href: string; description: string }[] = [
     title: "Pantalones",
     href: "/pantalones",
     description: "Pantalones cómodos y modernos.",
-  },
+  }
 ];
 
 function ListItem({
