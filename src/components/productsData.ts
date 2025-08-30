@@ -37,19 +37,19 @@ const products = [
   {
     id: 6,
     name: "Buzo Street Vibe",
-    image: "/products/Neonix - Chaqueta.png",
+    image: "/products/buzostreetv.jpg",
     category: "buzos",
   },
   {
     id: 7,
     name: "Buzo Urban Pulse",
-    image: "/products/Neonix - Chaqueta.png",
+    image: "/products/buzourbanp.jpg",
     category: "buzos",
   },
   {
     id: 8,
     name: "Buzo Metro Drift",
-    image: "/products/Neonix - Chaqueta.png",
+    image: "/products/buzometrod.jpg",
     category: "buzos",
   },
   {
@@ -61,7 +61,7 @@ const products = [
   {
     id: 10,
     name: "Buzo Night Shift",
-    image: "/products/Neonix - Chaqueta.png",
+    image: "/products/buzonights.jpg",
     category: "buzos",
   },
 
