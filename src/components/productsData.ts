@@ -1,7 +1,7 @@
 // app/components/productsData.ts
 
 const products = [
-  // ⭐ Productos Destacados
+  // Productos Destacados
   {
     id: 1,
     name: "Set Midnight Drop",
@@ -17,147 +17,147 @@ const products = [
   {
     id: 3,
     name: "Zapatillas Pulse Sneaker",
-    image: "/products/producto3.jpg",
+    image: "/products/producto1.jpg",
     category: "destacados",
   },
   {
     id: 4,
     name: "Buzo Neon Vibe",
-    image: "/products/producto4.jpg",
+    image: "/products/producto1.jpg",
     category: "destacados",
   },
   {
     id: 5,
     name: "Combo Essential Pack",
-    image: "/products/producto5.jpg",
+    image: "/products/producto1.jpg",
     category: "destacados",
   },
 
-  // 👕 Buzos
+  // Buzos
   {
     id: 6,
     name: "Buzo Street Vibe",
-    image: "/products/producto6.jpg",
+    image: "/products/buzostreetv.jpeg",
     category: "buzos",
   },
   {
     id: 7,
     name: "Buzo Urban Pulse",
-    image: "/products/producto7.jpg",
+    image: "/products/buzourbanp.jpeg",
     category: "buzos",
   },
   {
     id: 8,
     name: "Buzo Metro Drift",
-    image: "/products/producto8.jpg",
+    image: "/products/buzometrod.jpeg",
     category: "buzos",
   },
   {
     id: 9,
     name: "Buzo Noise Layer",
-    image: "/products/producto9.jpg",
+    image: "/products/producto1.jpg",
     category: "buzos",
   },
   {
     id: 10,
     name: "Buzo Night Shift",
-    image: "/products/producto10.jpg",
+    image: "/products/buzonights.jpeg",
     category: "buzos",
   },
 
-  // 👕 Camisetas
+  // Camisetas
   {
     id: 11,
     name: "Camiseta Core Street",
-    image: "/products/producto11.jpg",
+    image: "/products/producto1.jpg",
     category: "camisas",
   },
   {
     id: 12,
     name: "Camiseta Tag Life",
-    image: "/products/producto12.jpg",
+    image: "/products/producto1.jpg",
     category: "camisas",
   },
   {
     id: 13,
     name: "Camiseta Concrete Flow",
-    image: "/products/producto13.jpg",
+    image: "/products/producto1.jpg",
     category: "camisas",
   },
   {
     id: 14,
     name: "Camiseta Skyline Edge",
-    image: "/products/producto14.jpg",
+    image: "/products/producto1.jpg",
     category: "camisas",
   },
   {
     id: 15,
     name: "Camiseta Raw District",
-    image: "/products/producto15.jpg",
+    image: "/products/producto1.jpg",
     category: "camisas",
   },
 
-  // 👖 Pantalones
+  // Pantalones
   {
     id: 16,
     name: "Jogger Grind Mode",
-    image: "/products/producto16.jpg",
+    image: "/products/producto1.jpg",
     category: "pantalones",
   },
   {
     id: 17,
     name: "Cargo District Flex",
-    image: "/products/producto17.jpg",
+    image: "/products/producto1.jpg",
     category: "pantalones",
   },
   {
     id: 18,
     name: "Jean Underground",
-    image: "/products/producto18.jpg",
+    image: "/products/producto1.jpg",
     category: "pantalones",
   },
   {
     id: 19,
     name: "Pantalón Metroline",
-    image: "/products/producto19.jpg",
+    image: "/products/producto1.jpg",
     category: "pantalones",
   },
   {
     id: 20,
     name: "Pantalón Backalley Utility",
-    image: "/products/producto20.jpg",
+    image: "/products/producto1.jpg",
     category: "pantalones",
   },
 
-  // 🎒 Accesorios
+  // Accesorios
   {
     id: 21,
     name: "Gorra Concrete",
-    image: "/products/producto21.jpg",
+    image: "/products/producto1.jpg",
     category: "accesorios",
   },
   {
     id: 22,
     name: "Gorro Loop",
-    image: "/products/producto22.jpg",
+    image: "/products/producto1.jpg",
     category: "accesorios",
   },
   {
     id: 23,
     name: "Lentes Block Shades",
-    image: "/products/producto23.jpg",
+    image: "/products/producto1.jpg",
     category: "accesorios",
   },
   {
     id: 24,
     name: "Medias Urban Stride (3 pares)",
-    image: "/products/producto24.jpg",
+    image: "/products/producto1.jpg",
     category: "accesorios",
   },
   {
     id: 25,
     name: "Riñonera Core Side Bag",
-    image: "/products/producto25.jpg",
+    image: "/products/producto1.jpg",
     category: "accesorios",
   },
 ];
