@@ -1,6 +1,44 @@
 @layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
+/* Cambiar color de las flechas */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff !important; /* amarillo Tailwind (yellow-400) */
+  transition: color 0.3s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ffffff !important; /* hover más oscuro (yellow-500) */
+}
+
+/* Flechas en modo light */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ff0000 !important; /* gray-800 */
+  transition: color 0.3s;
+}
+
+/* Flechas en modo dark */
+.dark .swiper-button-next,
+.dark .swiper-button-prev {
+  color: #aa49ff !important; /* gray-50 */
+}
+
+/* Hover (para ambos modos) */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ffffff !important; /* rose-600 */
+}
+
+/* Opcional: aumentar tamaño */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 2rem !important;
+}
+
+
 
 
 @custom-variant dark (&:is(.dark *));
