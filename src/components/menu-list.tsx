@@ -2,8 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react"
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,6 +16,7 @@ export const MenuList = () => {
   return (
     <NavigationMenu viewport={false} className="relative z-50">
       <NavigationMenuList>
+        {/* Sección Sobre nosotros */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Sobre nosotros</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -29,7 +28,7 @@ export const MenuList = () => {
                     href="/"
                   >
                     <div className="mt-4 mb-2 text-lg font-medium">
-                        NEONIX
+                      NEONIX
                     </div>
                     <p className="text-sm leading-tight">
                       Vístete a la moda con nuestra ropa urbana
@@ -49,10 +48,21 @@ export const MenuList = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {/* Sección Catálogo */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              {/* Nuevo item: ver todo el catálogo */}
+              <ListItem
+                key="catalogo"
+                title="Ver todo el catálogo"
+                href="/catalogo"
+              >
+                Explora todos nuestros productos en un solo lugar
+              </ListItem>
+
               {components.map((component) => (
                 <ListItem
                   key={component.title}
@@ -65,16 +75,12 @@ export const MenuList = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {/* Otros enlaces */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/accesorios">Accesorios</Link>
           </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -97,7 +103,7 @@ const components: { title: string; href: string; description: string }[] = [
     href: "/pantalones",
     description: "Pantalones cómodos y modernos.",
   }
-];
+]
 
 function ListItem({
   title,
@@ -118,4 +124,4 @@ function ListItem({
     </li>
   )
 }
-export default MenuList;
+export default MenuList

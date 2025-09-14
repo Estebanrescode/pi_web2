@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CartProvider } from "@/context/cartContext";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <CartProvider>
             <Navbar />
             {children}
             <Footer />
+            </CartProvider>
           </ThemeProvider>
         </body>
       </html>
