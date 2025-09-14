@@ -6,7 +6,7 @@ import SplitBanner from "@/components/splitBanner";
 export default function Home() {
   return (
    <main>
-    <CarouselTextBanner />
+  
     <HeroBanner />
     <SplitBanner />
     <FeaturedProducts/>
