@@ -23,11 +23,28 @@ const slides = [
     title: "Colección para destacar",
     desc: "Haz que cada momento cuente, tu estilo habla más fuerte que las palabras.",
   },
+  {
+    img: "/banner4-envio.jpg",
+    title: "Tu Próximo Look, Ya en Camino", 
+    desc: "Desde nuestra tienda hasta tu hogar, nos aseguramos de que cada envío llegue perfecto y a tiempo.",
+  },
+  {
+    img: "/banner5-descuentos.png",
+    title: "Descuentos que no puedes dejar pasar",
+    desc: "Aprovecha nuestras ofertas exclusivas y renueva tu estilo sin gastar de más.",
+  },
+  {
+    img: "/banner6-devoluciones.jpg",
+    title: "Devoluciones sin complicaciones",
+    desc: "Compra con confianza sabiendo que si no es lo que esperabas, te lo ponemos fácil.",
+  }
+
+
 ];
 
 export default function HeroCarousel() {
   return (
-    <section className="w-full h-[80vh]">
+    <section className="w-full h-[60vh]">
       <Swiper
         modules={[Navigation, Autoplay]}
         navigation
@@ -37,19 +54,23 @@ export default function HeroCarousel() {
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>
-            <div className="relative w-full h-[80vh]">
+            <div className="relative w-full h-[60vh] overflow-hidden">
               {/* Imagen adaptada */}
+              <div
+                className="absolute inset-0 bg-center bg-cover"
+                style={{ backgroundImage: `url(${slide.img})` }}
+              />
               <img
                 src={slide.img}
                 alt={slide.title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="relative mx-auto h-full object-contain"
               />
 
               {/* Capa oscura encima de la imagen */}
               <div className="absolute inset-0 bg-black/50" />
 
               {/* Contenido encima */}
-              <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4">
+               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
                 <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">
                   {slide.title}
                 </h1>
