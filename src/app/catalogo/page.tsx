@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import products from "@/components/productsData";
 import { useCart } from "@/context/cartContext";
@@ -25,29 +26,24 @@ export default function HomePage() {
 
           return (
             <div
-              key={product.id}
+              key={index}
               className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
             >
-              <Link href={`/catalogo/${product.id}`}>
-                <div>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-97 object-contain bg-white"
-                  />
-                  <div className="p-4 flex flex-col items-center text-center">
-                    <h2 className="text-lg font-semibold">{product.name}</h2>
-                    <p className="text-gray-800 dark:text-gray-200 text-sm mt-2">
-                      {product.category}
-                    </p>
-                    <p className="text-gray-800 dark:text-gray-200 text-lg font-semibold mt-8">
-                      ${product.precio.toLocaleString("es-CO")}
-                    </p>
-                  </div>
-                </div>
-              </Link>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-97 object-contain bg-white"
+              />
+              <div className="p-4 flex flex-col items-center text-center">
+                <h2 className="text-lg font-semibold">{product.name}</h2>
+                <p className="text-gray-800 dark:text-gray-200 text-sm mt-2">
+                  {product.category}
+                </p>
+                <p className="text-gray-800 dark:text-gray-200 text-lg font-semibold mt-8">
+                  {product.precio}
+                </p>
 
-              <div className="p-4 flex flex-col items-center">
+                {/* Selector de cantidad */}
                 <div className="flex items-center gap-2 mt-3">
                   <label className="text-sm">Cantidad:</label>
                   <input
@@ -61,20 +57,31 @@ export default function HomePage() {
                   />
                 </div>
 
+                {/* Botón agregar al carrito */}
                 <button
                   onClick={() =>
                     addToCart({
-                      id: product.id,
+                      id: product.id ?? index,
                       name: product.name,
-                      price: product.precio,
+                      price: parseInt(
+                        product.precio.toString().replace(/\./g, "")
+                      ),
                       image: product.image,
-                      quantity: quantity,
+                      quantity,
                     })
                   }
                   className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg"
                 >
                   Agregar al carrito
                 </button>
+
+                {/* 👉 Link Ver detalle */}
+                <Link
+                  href={`/catalogo/${product.id ?? index}`}
+                  className="mt-3 text-sm text-blue-200 underline hover:text-yellow-300"
+                >
+                  Ver detalle
+                </Link>
               </div>
             </div>
           );

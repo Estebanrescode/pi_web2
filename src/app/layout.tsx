@@ -12,12 +12,10 @@ const urbanist = Urbanist({
   variable: "--font-urbanist",
   display: "swap",
 });
-
 export const metadata: Metadata = {
   title: "NEONIX",
   description: "BIENVENIDO A NEONIX",
 };
-
 export default function RootLayout({
   children,
 }: {
@@ -25,20 +23,18 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="es" suppressHydrationWarning>
+      <html lang="es">
         <body className={urbanist.className}>
-          {/* ThemeProvider ahora fuerza siempre el modo claro */}
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
-            enableSystem={false}   // 👈 deshabilitamos el sistema
-            forcedTheme="light"    // 👈 fuerza tema claro siempre
+            defaultTheme="system"
+            enableSystem
             disableTransitionOnChange
           >
             <CartProvider>
-              <Navbar />
-              {children}
-              <Footer />
+            <Navbar />
+            {children}
+            <Footer />
             </CartProvider>
           </ThemeProvider>
         </body>
