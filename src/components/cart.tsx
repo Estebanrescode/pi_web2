@@ -1,6 +1,7 @@
 "use client";
 import { useCart } from "@/context/cartContext";
 import Image from "next/image";
+import Link from "next/link";
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
@@ -8,6 +9,8 @@ const Cart = () => {
   if (cartItems.length === 0) {
     return <p className="text-center text-lg">Tu carrito está vacío 🛒</p>;
   }
+
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="space-y-6">
@@ -40,12 +43,19 @@ const Cart = () => {
         </div>
       ))}
 
-      <button
-        onClick={clearCart}
-        className="mt-6 bg-red-600 text-white px-4 py-2 rounded-lg"
-      >
-        Vaciar carrito
-      </button>
+      <div className="text-right font-bold">Total: ${total}</div>
+
+      <div className="flex justify-between">
+        <button
+          onClick={clearCart}
+          className="bg-red-600 text-white px-4 py-2 rounded-lg"
+        >
+          Vaciar carrito
+        </button>
+        <Link href="/checkout" className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+          Proceder a Checkout
+        </Link>
+      </div>
     </div>
   );
 };
