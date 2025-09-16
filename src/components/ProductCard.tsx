@@ -1,27 +1,45 @@
-// app/components/ProductCard.tsx
-import Link from "next/link";
+// src/components/ProductCard.tsx
+"use client";
 
-type ProductCardProps = {
+import React, { useState } from "react";
+import { useCart } from "@/context/cartContext";
+import Image from "next/image";
+
+interface Product {
   id: number;
   name: string;
   image: string;
   precio: number;
-};
+}
 
-export default function ProductCard({ id, name, image, precio }: ProductCardProps) {
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    addToCart(product.id, quantity);
+  };
+
   return (
-    <div className="border rounded-lg shadow-md p-4 text-center">
-      <img src={image} alt={name} className="w-full h-48 object-cover rounded-md mb-4" />
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <p className="text-gray-700 font-medium">${precio.toLocaleString()}</p>
-
-      {/* 👇 Aquí agregamos el link al detalle */}
-      <Link
-        href={`/products/${id}`}
-        className="inline-block mt-3 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+    <div className="border p-4 rounded shadow">
+      <Image src={product.image} alt={product.name} width={200} height={200} />
+      <h3 className="font-bold">{product.name}</h3>
+      <p>${product.precio.toLocaleString()}</p>
+      <input
+        type="number"
+        min="1"
+        value={quantity}
+        onChange={(e) => setQuantity(parseInt(e.target.value))}
+        className="border p-1 w-16"
+      />
+      <button
+        onClick={handleAddToCart}
+        className="bg-blue-600 text-white px-4 py-2 rounded mt-2"
       >
-        Ver detalle
-      </Link>
+        Agregar al Carrito
+      </button>
     </div>
   );
-}
+};
+
+export default ProductCard;

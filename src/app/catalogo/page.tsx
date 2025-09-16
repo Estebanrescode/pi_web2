@@ -22,11 +22,11 @@ export default function HomePage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product, index) => {
-          const quantity = quantities[index] || 1;
+          const quantity = quantities[product.id] || 1; // Cambié index por product.id para usar el ID real
 
           return (
             <div
-              key={index}
+              key={product.id} // Cambié index por product.id para una clave única
               className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
             >
               <img
@@ -40,7 +40,7 @@ export default function HomePage() {
                   {product.category}
                 </p>
                 <p className="text-gray-800 dark:text-gray-200 text-lg font-semibold mt-8">
-                  {product.precio}
+                  ${product.precio.toLocaleString()} {/* Formateo como moneda */}
                 </p>
 
                 {/* Selector de cantidad */}
@@ -51,7 +51,7 @@ export default function HomePage() {
                     min={1}
                     value={quantity}
                     onChange={(e) =>
-                      handleQuantityChange(index, parseInt(e.target.value))
+                      handleQuantityChange(product.id, parseInt(e.target.value))
                     }
                     className="w-16 border rounded text-center"
                   />
@@ -59,17 +59,7 @@ export default function HomePage() {
 
                 {/* Botón agregar al carrito */}
                 <button
-                  onClick={() =>
-                    addToCart({
-                      id: product.id ?? index,
-                      name: product.name,
-                      price: parseInt(
-                        product.precio.toString().replace(/\./g, "")
-                      ),
-                      image: product.image,
-                      quantity,
-                    })
-                  }
+                  onClick={() => addToCart(product.id, quantity)} // Corrección aquí
                   className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg"
                 >
                   Agregar al carrito
@@ -77,7 +67,7 @@ export default function HomePage() {
 
                 {/* 👉 Link Ver detalle */}
                 <Link
-                  href={`/catalogo/${product.id ?? index}`}
+                  href={`/catalogo/${product.id}`} // Usar product.id en lugar de index
                   className="mt-3 text-sm text-blue-200 underline hover:text-yellow-300"
                 >
                   Ver detalle
