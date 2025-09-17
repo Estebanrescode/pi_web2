@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
+import * as React from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,13 +11,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 
 export const MenuList = () => {
+  const searchParams = useSearchParams();
+  const activeCategory = searchParams.get("category") ?? "";
+
   return (
     <NavigationMenu viewport={false} className="relative z-50">
       <NavigationMenuList>
-        {/* Sección Sobre nosotros */}
+        {/* Sección Sobre nosotros (sin cambios) */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Sobre nosotros</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -27,38 +31,36 @@ export const MenuList = () => {
                     className="flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
                     href="/"
                   >
-                    <div className="mt-4 mb-2 text-lg font-medium">
-                      NEONIX
-                    </div>
+                    <div className="mt-4 mb-2 text-lg font-medium">NEONIX</div>
                     <p className="text-sm leading-tight">
                       Vístete a la moda con nuestra ropa urbana
                     </p>
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/shop" title="Tienda">
-                Accede a tu información, tus pedidos y mucho más
+              <ListItem href="/catalogo?category=camisetas" title="Camisetas">
+                Camisetas para todos los gustos y estilos.
               </ListItem>
-              <ListItem href="/offers" title="Ofertas">
-                Sección dedicada a promociones y descuentos especiales
+              <ListItem href="/catalogo?category=buzos" title="Buzos">
+                Variedad de buzos con estilos urbanos.
               </ListItem>
-              <ListItem href="/" title="Productos destacados">
-                Los productos más populares y exclusivos
+              <ListItem href="/catalogo?category=pantalones" title="Pantalones">
+                Pantalones cómodos y modernos.
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {/* Sección Catálogo */}
+        {/* Sección Catálogo (modificada) */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Catálogo</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {/* Nuevo item: ver todo el catálogo */}
               <ListItem
                 key="catalogo"
                 title="Ver todo el catálogo"
                 href="/catalogo"
+                isActive={activeCategory === ""}
               >
                 Explora todos nuestros productos en un solo lugar
               </ListItem>
@@ -68,6 +70,7 @@ export const MenuList = () => {
                   key={component.title}
                   title={component.title}
                   href={component.href}
+                  isActive={activeCategory === component.value}
                 >
                   {component.description}
                 </ListItem>
@@ -79,42 +82,50 @@ export const MenuList = () => {
         {/* Otros enlaces */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/accesorios">Accesorios</Link>
+            <Link href="/catalogo?category=accesorios">Accesorios</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
-}
+  );
+};
 
-const components: { title: string; href: string; description: string }[] = [
+const components: { title: string; href: string; description: string; value: string }[] = [
   {
     title: "Buzos",
-    href: "/buzos",
+    href: "/catalogo?category=buzos",
+    value: "buzos",
     description: "Variedad de buzos con estilos urbanos.",
   },
   {
     title: "Camisetas",
-    href: "/camisetas",
+    href: "/catalogo?category=camisas",
+    value: "camisas", // coincide con productsData
     description: "Camisetas para todos los gustos y estilos.",
   },
   {
     title: "Pantalones",
-    href: "/pantalones",
+    href: "/catalogo?category=pantalones",
+    value: "pantalones",
     description: "Pantalones cómodos y modernos.",
-  }
-]
+  },
+];
 
 function ListItem({
   title,
   children,
   href,
+  isActive,
   ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: React.ComponentPropsWithoutRef<"li"> & { href: string; isActive?: boolean }) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link href={href}>
+        <Link
+          href={href}
+          className={`flex flex-col gap-1 no-underline p-2 rounded-md ${isActive ? "bg-orange-100 dark:bg-neutral-800" : ""
+            }`}
+        >
           <div className="text-sm leading-none font-medium">{title}</div>
           <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
             {children}
@@ -122,6 +133,7 @@ function ListItem({
         </Link>
       </NavigationMenuLink>
     </li>
-  )
+  );
 }
-export default MenuList
+
+export default MenuList;
