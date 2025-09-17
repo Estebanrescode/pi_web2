@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Separator } from "./ui/separator";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 
 const dataFooter = [
@@ -11,66 +10,106 @@ const dataFooter = [
 
 const Footer = () => {
   return (
-    <footer className="mt-10 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
-      <div className="w-full max-w-screen-xl mx-auto px-6 py-10">
+    <footer
+      className="
+        mt-16 
+        border-t border-gray-200 dark:border-gray-800 
+        bg-gradient-to-r from-orange-100 to-orange-200
+        dark:from-violet-900 dark:to-violet-950
+      "
+    >
+      <div className="w-full max-w-screen-xl mx-auto px-6 py-14">
         {/* Top */}
-        <div className="md:flex md:items-center md:justify-between">
-          {/* Brand */}
-          <p className="mb-6 md:mb-0 text-lg font-semibold text-gray-900 dark:text-gray-100">
-            <span className="font-bold text-violet-600 dark:text-violet-400">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Marca */}
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               NEONIX
-            </span>{" "}
-            E-commerce
-          </p>
+            </h2>
+            <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+              Somos una marca de moda urbana que combina estilo y comodidad.
+              Descubre nuestras camisetas, buzos, pantalones y accesorios
+              diseñados para destacar ❤️
+            </p>
+          </div>
 
-          {/* Navigation */}
-          <ul className="flex flex-wrap items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-400">
-            {dataFooter.map((data) => (
-              <li key={data.id}>
-                <Link
-                  href={data.link}
-                  className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-                >
-                  {data.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {/* Links */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+              Enlaces Rápidos
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              {dataFooter.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    href={item.link}
+                    className="hover:text-orange-600 dark:hover:text-violet-400 transition-colors"
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+              Suscríbete
+            </h3>
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+              Recibe ofertas exclusivas y novedades.
+            </p>
+            <form className="flex">
+              <input
+                type="email"
+                placeholder="Tu correo"
+                className="w-full px-3 py-2 rounded-l-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-r-lg bg-orange-600 dark:bg-violet-600 text-white text-sm font-semibold hover:bg-orange-700 dark:hover:bg-violet-700 transition-colors"
+              >
+                Enviar
+              </button>
+            </form>
+          </div>
+
+          {/* Redes sociales */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
+              Síguenos
+            </h3>
+            <div className="flex space-x-5">
+              <Link
+                href="#"
+                className="text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-violet-400 transition-colors"
+              >
+                <Facebook size={20} />
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-violet-400 transition-colors"
+              >
+                <Instagram size={20} />
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-600 hover:text-orange-600 dark:text-gray-300 dark:hover:text-violet-400 transition-colors"
+              >
+                <Twitter size={20} />
+              </Link>
+            </div>
+          </div>
         </div>
 
-        <Separator className="my-8 border-gray-300 dark:border-gray-700" />
-
         {/* Bottom */}
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="block text-sm text-gray-500 dark:text-gray-400">
-            &copy; {new Date().getFullYear()}{" "}
-            <Link href="#" className="font-semibold hover:underline">
-              NEONIX
-            </Link>
-            . Todos los derechos reservados.
-          </span>
-
-          {/* Socials */}
-          <div className="flex space-x-5 mt-4 sm:mt-0">
-            <Link
-              href="#"
-              className="text-gray-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-            >
-              <Facebook size={18} />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-            >
-              <Instagram size={18} />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-            >
-              <Twitter size={18} />
-            </Link>
-          </div>
+        <div className="mt-10 text-center text-sm text-gray-600 dark:text-gray-400">
+          &copy; {new Date().getFullYear()}{" "}
+          <Link href="#" className="font-semibold">
+            NEONIX
+          </Link>
+          . Diseñado con ❤️ por el equipo NEONIX.
         </div>
       </div>
     </footer>
