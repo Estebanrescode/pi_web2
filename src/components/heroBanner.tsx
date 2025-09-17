@@ -29,12 +29,12 @@ const slides = [
     desc: "Desde nuestra tienda hasta tu hogar, nos aseguramos de que cada envío llegue perfecto y a tiempo.",
   },
   {
-    img: "/banner5-descuentos.png",
+    img: "/BannerDescuentos.png",
     title: "Descuentos que no puedes dejar pasar",
     desc: "Aprovecha nuestras ofertas exclusivas y renueva tu estilo sin gastar de más.",
   },
   {
-    img: "/banner6-devoluciones.jpg",
+    img: "/BannerDevoluciones.png",
     title: "Devoluciones sin complicaciones",
     desc: "Compra con confianza sabiendo que si no es lo que esperabas, te lo ponemos fácil.",
   }

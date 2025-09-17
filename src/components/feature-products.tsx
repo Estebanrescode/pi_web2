@@ -5,6 +5,7 @@ import React from "react";
 import Image from "next/image";
 import products from "./productsData";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { usePathname } from "next/navigation";
 
 const renderCategory = (title: string, category: string) => {
   const filteredProducts = products.filter((p) => p.category === category);
@@ -37,6 +38,14 @@ const renderCategory = (title: string, category: string) => {
 };
 
 const FeaturedProducts = () => {
+  const pathname = usePathname();
+
+  // ✅ En la página de inicio solo mostrar productos destacados
+  if (pathname === "/") {
+    return renderCategory("Productos Destacados", "destacados");
+  }
+
+  // ✅ En otras páginas mostrar todas las categorías
   return (
     <>
       {renderCategory("Productos Destacados", "destacados")}
@@ -47,6 +56,5 @@ const FeaturedProducts = () => {
     </>
   );
 };
-
 
 export default FeaturedProducts;
