@@ -270,19 +270,20 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-gradient-to-r from-violet-700/40 to-pink-600/30 p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">
+         <div className="rounded-lg bg-card border p-4 m-2">
+  
+            <h2 className="text-xl font-semibold mb-4">
               8. Contacto y consultas
             </h2>
-            <div className="text-slate-300">
-              <p className="text-sm mb-4">
+            <div className="">
+              <p className="">
                 Si tienes preguntas sobre esta política de privacidad o quieres ejercer
                 tus derechos, puedes contactarnos:
               </p>
-              <div className="space-y-2 text-sm">
-                <p><strong className="text-white">Email:</strong> privacy@neonix.com</p>
-                <p><strong className="text-white">Tiempo de respuesta:</strong> Máximo 30 días hábiles</p>
-                <p><strong className="text-white">Responsable:</strong> Equipo de Privacidad Neonix</p>
+              <div className=" ">
+                <p><strong className="">Email:</strong> privacy@neonix.com</p>
+                <p><strong className="">Tiempo de respuesta:</strong> Máximo 30 días hábiles</p>
+                <p><strong className="">Responsable:</strong> Equipo de Privacidad Neonix</p>
               </div>
             </div>
           </div>
