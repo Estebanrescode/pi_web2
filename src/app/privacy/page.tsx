@@ -1,5 +1,5 @@
 
-// src/app/privacy/page.tsx
+
 import React from "react";
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* HEADER */}
+    
       <section className="bg-muted/50 border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-12">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
@@ -25,11 +25,9 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
 
-      {/* CONTENT */}
       <section className="mx-auto max-w-4xl px-6 py-12">
         <div className="space-y-8">
 
-          {/* Información que recopilamos */}
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               1. Información que recopilamos
@@ -60,7 +58,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Cómo usamos tu información */}
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               2. Cómo usamos tu información
@@ -93,7 +90,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Compartir información */}
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               3. Compartir tu información
@@ -129,7 +125,7 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Seguridad */}
+   
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               4. Seguridad de la información
@@ -158,7 +154,7 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Tus derechos */}
+   
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               5. Tus derechos
@@ -200,7 +196,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Cookies */}
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               6. Cookies y seguimiento
@@ -242,7 +237,7 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Retención de datos */}
+        
           <div className="rounded-lg bg-card border p-6">
             <h2 className="text-xl font-semibold mb-4">
               7. Retención de datos
@@ -275,7 +270,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Contacto */}
           <div className="rounded-lg bg-gradient-to-r from-violet-700/40 to-pink-600/30 p-6">
             <h2 className="text-xl font-semibold text-white mb-4">
               8. Contacto y consultas
@@ -293,7 +287,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
 
-          {/* Cambios */}
           <div className="text-center py-8 border-t border-border">
             <h3 className="text-lg font-semibold mb-3">
               Cambios a esta política
