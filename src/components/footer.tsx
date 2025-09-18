@@ -5,7 +5,7 @@ const dataFooter = [
   { id: 1, title: "Sobre Nosotros", link: "#" },
   { id: 2, title: "Productos", link: "#" },
   { id: 3, title: "Mi Cuenta", link: "#" },
-  { id: 4, title: "Política de Privacidad", link: "#" },
+  { id: 4, title: "Política de Privacidad", link: "/privacy" },
 ];
 
 const Footer = () => {
