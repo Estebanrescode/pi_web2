@@ -14,7 +14,7 @@ export default function Home() {
       <SplitBanner />
       <CategoryBanner
         title="Pantalones"
-        image="/BannerPantalones.png"
+        image="https://res.cloudinary.com/ddzetix8t/image/upload/BannerPantalones_f46zim"
         link="/camisetas"
         buttonLabel="Ver Camisetas"
         position="center 5%"   // 👈 otra posición
@@ -22,7 +22,7 @@ export default function Home() {
       <FeaturedProducts />
       <CategoryBanner
         title="Accesorios"
-        image="/BannerAccesorios.png"
+        image="https://res.cloudinary.com/ddzetix8t/image/upload/BannerAccesorios_s1qb1u"
         link="/accesorios"
         buttonLabel="Ver Accesorios"
         position="center 30%"   // 👈 ajustas la parte visible

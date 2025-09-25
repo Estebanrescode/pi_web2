@@ -9,7 +9,7 @@ export default function SplitBanner() {
       <div
         className="relative bg-cover bg-center flex flex-col items-center justify-center text-center"
         style={{
-          backgroundImage: "url('/BannerCamisas.png')",
+          backgroundImage: "url('https://res.cloudinary.com/ddzetix8t/image/upload/BannerCamisas_jnxzvw')",
           backgroundPosition: "center 10%", // mueve la imagen hacia abajo
         }}
       >
@@ -35,7 +35,7 @@ export default function SplitBanner() {
       <div
         className="relative bg-cover bg-center flex flex-col items-center justify-center text-center"
         style={{
-          backgroundImage: "url('/BannerBuzos.png')",
+          backgroundImage: "url('https://res.cloudinary.com/ddzetix8t/image/upload/BannerBuzos_mnxsev')",
           backgroundPosition: "center 30%", // mueve la imagen hacia abajo
         }}
       >

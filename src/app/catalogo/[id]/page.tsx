@@ -1,4 +1,4 @@
-// app/catalogo/[id]/page.tsx
+
 import Link from "next/link";
 import products from "@/components/productsData"; // 👈 revisa esta ruta, puede que necesites "@/app/components/productsData"
 
