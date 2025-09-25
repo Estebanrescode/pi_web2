@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 
 const dataFooter = [
-  { id: 1, title: "Sobre Nosotros", link: "#" },
+  { id: 1, title: "Sobre Nosotros", link: "/about" },
   { id: 2, title: "Productos", link: "#" },
   { id: 3, title: "Mi Cuenta", link: "#" },
   { id: 4, title: "Política de Privacidad", link: "/privacy" },
