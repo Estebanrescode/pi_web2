@@ -23,7 +23,7 @@ const Navbar = () => {
       {/* Logo */}
       <div onClick={() => router.push("/")} className="flex items-center gap-2">
         <Image
-          src="/logo.png"
+          src="https://res.cloudinary.com/ddzetix8t/image/upload/logo_lthkjh"
           alt="Logo"
           width={140}
           height={30}

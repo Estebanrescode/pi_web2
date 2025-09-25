@@ -5,36 +5,37 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const slides = [
   {
-    img: "/banner1.jpg",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner1_hldnk7",
     title: "Estilo que marca la calle",
     desc: "Vístete como piensas, camina como sueñas: la ciudad es tu pasarela.",
   },
   {
-    img: "/banner2.jpg",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner2_jhfjju",
     title: "Actitud y comodidad",
     desc: "No sigas tendencias, créalas. La moda urbana empieza contigo.",
   },
   {
-    img: "/banner3.jpg",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner3_o8galc",
     title: "Colección para destacar",
     desc: "Haz que cada momento cuente, tu estilo habla más fuerte que las palabras.",
   },
   {
-    img: "/banner4-envio.jpg",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner4-envio_ecbxaj",
     title: "Tu Próximo Look, Ya en Camino", 
     desc: "Desde nuestra tienda hasta tu hogar, nos aseguramos de que cada envío llegue perfecto y a tiempo.",
   },
   {
-    img: "/BannerDescuentos.png",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/BannerDescuentos_aemhr4",
     title: "Descuentos que no puedes dejar pasar",
     desc: "Aprovecha nuestras ofertas exclusivas y renueva tu estilo sin gastar de más.",
   },
   {
-    img: "/BannerDevoluciones.png",
+    img: "https://res.cloudinary.com/ddzetix8t/image/upload/BannerDevoluciones_i7esin",
     title: "Devoluciones sin complicaciones",
     desc: "Compra con confianza sabiendo que si no es lo que esperabas, te lo ponemos fácil.",
   }
