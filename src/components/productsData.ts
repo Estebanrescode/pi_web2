@@ -1,5 +1,5 @@
 // app/components/productsData.ts
-import Image from "next/image"
+// import Image from "next/image"
 
 const products = [
   // Productos Destacados

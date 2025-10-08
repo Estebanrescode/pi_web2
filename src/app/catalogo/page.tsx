@@ -4,6 +4,7 @@ import { useState } from "react";
 import products from "@/components/productsData";
 import { useCart } from "@/context/cartContext";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   const { addToCart } = useCart();
@@ -21,7 +22,7 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold text-center mb-10">Catálogo</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product, index) => {
+        {products.map((product) => { //Se elimina index ya que no es usado
           const quantity = quantities[product.id] || 1; // Cambié index por product.id para usar el ID real
 
           return (
@@ -29,7 +30,7 @@ export default function HomePage() {
               key={product.id} // Cambié index por product.id para una clave única
               className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
             >
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
                 className="w-full h-97 object-contain bg-white"

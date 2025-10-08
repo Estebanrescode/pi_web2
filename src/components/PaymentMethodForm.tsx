@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from "next/image";
 
 interface PaymentMethodFormProps {
   initialMethod?: string;
@@ -37,7 +38,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ initialMethod = '
             className="form-radio h-5 w-5 text-blue-600"
           />
           <label htmlFor="creditCard" className="text-lg font-medium text-black flex-grow">Tarjeta de Crédito/Débito</label>
-          <img src="/images/visa-mastercard.png" alt="Tarjetas" className="h-6" /> {/* Asegúrate de tener esta imagen */}
+          <Image src="/images/visa-mastercard.png" alt="Tarjetas" className="h-6" /> {/* Asegúrate de tener esta imagen */}
         </div>
 
         {selectedMethod === 'Tarjeta de Crédito/Débito' && (
@@ -75,7 +76,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ initialMethod = '
             className="form-radio h-5 w-5 text-blue-600"
           />
           <label htmlFor="paypal" className="text-lg font-medium text-black flex-grow">PayPal</label>
-          <img src="/images/paypal.png" alt="PayPal" className="h-6" /> {/* Asegúrate de tener esta imagen */}
+          <Image src="/images/paypal.png" alt="PayPal" className="h-6" /> {/* Asegúrate de tener esta imagen */}
         </div>
 
         {selectedMethod === 'PayPal' && (

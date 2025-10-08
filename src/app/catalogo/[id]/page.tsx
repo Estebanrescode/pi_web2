@@ -1,19 +1,18 @@
-
+/* eslint-disable */
 import Link from "next/link";
-import products from "@/components/productsData"; // 👈 revisa esta ruta, puede que necesites "@/app/components/productsData"
+import Image from "next/image";
+import products from "@/components/productsData";
 
+// Definimos el tipo de los parámetros dinámicos
 type Props = {
   params: { id: string };
 };
 
+// Exportamos la función como un componente de servidor
 export default function ProductDetail({ params }: Props) {
-  // 👇 convierto el id de la URL a número
   const productId = Number(params.id);
-
-  // 👇 busco en la lista de productos
   const product = products.find((p) => p.id === productId);
 
-  // 🟥 si no lo encuentra
   if (!product) {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
@@ -30,18 +29,22 @@ export default function ProductDetail({ params }: Props) {
     );
   }
 
-  // 🟩 si lo encuentra
   return (
     <div className="max-w-3xl mx-auto p-6">
-      <img
+      <Image
         src={product.image}
         alt={product.name}
+        width={600}
+        height={400}
         className="w-full h-80 object-contain rounded-lg mb-6 bg-white"
       />
+
       <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+
       <p className="text-xl font-semibold mb-2">
         Precio: ${product.precio.toLocaleString()}
       </p>
+
       <p className="text-gray-600 mb-6">Categoría: {product.category}</p>
 
       <Link

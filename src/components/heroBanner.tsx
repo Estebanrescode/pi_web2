@@ -61,7 +61,7 @@ export default function HeroCarousel() {
                 className="absolute inset-0 bg-center bg-cover"
                 style={{ backgroundImage: `url(${slide.img})` }}
               />
-              <img
+              <Image
                 src={slide.img}
                 alt={slide.title}
                 className="relative mx-auto h-full object-contain"
