@@ -34,5 +34,4 @@ import {
     </DropdownMenu>
   )
 }
-
 export default ToggleTheme;
