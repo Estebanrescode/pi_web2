@@ -2,9 +2,21 @@
 import React from 'react';
 import OrderDetailView from './OrderDetailView'; // Reusa el componente de detalles
 
-interface OrderConfirmationDetailsProps {
-  order: any; // Tipo igual a Order
+
+interface Order {
+  id: string;
+  items: { id: number; name: string; price: number; quantity: number; image: string }[];
+  shippingAddress: { address1: string; city: string; state: string; zip: string };
+  paymentMethod: string;
+  total: number;
+  date: string;
 }
+
+interface OrderConfirmationDetailsProps {
+  order: Order; // Tipo igual a Order
+
+  }
+
 
 const OrderConfirmationDetails: React.FC<OrderConfirmationDetailsProps> = ({ order }) => {
   return (

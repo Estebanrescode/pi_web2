@@ -6,7 +6,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
+
+
 
 const slides = [
   {
@@ -26,7 +28,7 @@ const slides = [
   },
   {
     img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner4-envio_ecbxaj",
-    title: "Tu Próximo Look, Ya en Camino", 
+    title: "Tu Próximo Look, Ya en Camino",
     desc: "Desde nuestra tienda hasta tu hogar, nos aseguramos de que cada envío llegue perfecto y a tiempo.",
   },
   {
@@ -38,9 +40,7 @@ const slides = [
     img: "https://res.cloudinary.com/ddzetix8t/image/upload/BannerDevoluciones_i7esin",
     title: "Devoluciones sin complicaciones",
     desc: "Compra con confianza sabiendo que si no es lo que esperabas, te lo ponemos fácil.",
-  }
-
-
+  },
 ];
 
 export default function HeroCarousel() {
@@ -61,17 +61,19 @@ export default function HeroCarousel() {
                 className="absolute inset-0 bg-center bg-cover"
                 style={{ backgroundImage: `url(${slide.img})` }}
               />
-              <img
+              <Image
                 src={slide.img}
                 alt={slide.title}
-                className="relative mx-auto h-full object-contain"
+                fill
+                priority
+                className="object-contain"
               />
 
               {/* Capa oscura encima de la imagen */}
               <div className="absolute inset-0 bg-black/50" />
 
               {/* Contenido encima */}
-               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-4">
                 <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">
                   {slide.title}
                 </h1>
