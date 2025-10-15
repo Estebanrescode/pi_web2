@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 
 
+
 const slides = [
   {
     img: "https://res.cloudinary.com/ddzetix8t/image/upload/banner1_hldnk7",
