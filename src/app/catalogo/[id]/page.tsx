@@ -1,23 +1,23 @@
-/* eslint-disable */
 import Link from "next/link";
 import Image from "next/image";
 import products from "@/components/productsData";
 
 // Definimos el tipo de los parámetros dinámicos
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 // Exportamos la función como un componente de servidor
-export default function ProductDetail({ params }: Props) {
-  const productId = Number(params.id);
+export default async function ProductDetail({ params }: Props) {
+  const { id } = await params;  // Resolvemos la Promise para obtener el ID
+  const productId = Number(id);
   const product = products.find((p) => p.id === productId);
 
   if (!product) {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
         <p className="text-red-500 text-lg mb-4">
-          Producto no encontrado. (ID recibido: {params.id})
+          Producto no encontrado. (ID recibido: {id})
         </p>
         <Link
           href="/catalogo"
