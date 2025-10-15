@@ -6,7 +6,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
+
 
 const slides = [
   {
