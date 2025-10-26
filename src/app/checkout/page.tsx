@@ -9,7 +9,6 @@ import CartSummary from '@/components/CartSummary';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/cartContext';
 
-
 interface ShippingAddress {
   address1: string;
   city: string;
@@ -19,7 +18,7 @@ interface ShippingAddress {
 
 const CheckoutPage = () => {
   const router = useRouter();
-  const { cartItems, clearCart } = useCart();
+  const { cart, clearCart } = useCart(); // 🔥 Usamos `cart`, no `cartItems`
 
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
     address1: '',
@@ -33,7 +32,8 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // 🔥 Calcular subtotal en base al `cart`
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shippingCost = 10000;
   const total = subtotal + shippingCost;
 
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
 
     try {
       const orderData = {
-        items: cartItems.map(item => ({
+        items: cart.map(item => ({
           productId: item.id,
           name: item.name,
           quantity: item.quantity,
@@ -60,9 +60,7 @@ const CheckoutPage = () => {
 
       const response = await fetch('http://localhost:8080/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
       });
 
@@ -176,7 +174,8 @@ const CheckoutPage = () => {
                 <p className="text-black">{paymentMethod || 'No seleccionado'}</p>
               </div>
 
-              <OrderSummary items={cartItems} />
+              {/* 🔥 Actualizado: pasar `cart` */}
+              <OrderSummary items={cart} />
 
               {error && <p className="text-red-600 mt-4">{error}</p>}
 
