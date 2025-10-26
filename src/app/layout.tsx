@@ -1,7 +1,8 @@
-// src/app/layout.tsx
+
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
+
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "next-themes";
@@ -28,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="es" suppressHydrationWarning={true}>
+      <html lang="es" suppressHydrationWarning>
         <body className={urbanist.className}>
           <ThemeProvider
             attribute="class"
@@ -36,13 +37,18 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            {/* 🔹 Contextos globales */}
             <CartProvider>
               <OrderProvider>
-                {/* ENVUELVE EL NAVBAR EN SUSPENSE */}
+                {/* 🔹 Navbar dentro de Suspense */}
                 <Suspense fallback={<NavbarFallback />}>
                   <Navbar />
                 </Suspense>
-                {children}
+
+                {/* 🔹 Contenido principal */}
+                <main>{children}</main>
+
+                {/* 🔹 Footer */}
                 <Footer />
               </OrderProvider>
             </CartProvider>
@@ -53,7 +59,7 @@ export default function RootLayout({
   );
 }
 
-// Este fallback se muestra mientras carga el Navbar en cliente
+/** 🔸 Fallback mientras carga el Navbar en cliente */
 function NavbarFallback() {
   return <div className="h-16" />; // altura del navbar
 }

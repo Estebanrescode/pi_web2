@@ -8,7 +8,7 @@ import PlaceOrderButton from '@/components/PlaceOrderButton';
 import CartSummary from '@/components/CartSummary';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/cartContext';
-import { useOrders } from '@/context/orderContext';
+
 
 interface ShippingAddress {
   address1: string;
@@ -20,73 +20,116 @@ interface ShippingAddress {
 const CheckoutPage = () => {
   const router = useRouter();
   const { cartItems, clearCart } = useCart();
-  const { addOrder } = useOrders();
+
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
     address1: '',
     city: '',
     state: '',
     zip: '',
   });
+
   const [paymentMethod, setPaymentMethod] = useState('');
   const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingCost = 10000; // Ajusta según necesites (en pesos o lo que uses)
+  const shippingCost = 10000;
   const total = subtotal + shippingCost;
 
   const handlePlaceOrder = async () => {
     if (!shippingAddress.address1 || !paymentMethod) return;
 
-    const orderId = addOrder({
-      items: cartItems,
-      shippingAddress,
-      paymentMethod,
-      subtotal,
-      shippingCost,
-      total,
-    });
-    clearCart();
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simula delay
-    router.push(`/order-confirmation/${orderId}`);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const orderData = {
+        items: cartItems.map(item => ({
+          productId: item.id,
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        shippingAddress,
+        paymentMethod,
+        subtotal,
+        shippingCost,
+        total,
+      };
+
+      const response = await fetch('http://localhost:8080/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ Pedido procesado:', result);
+
+      clearCart();
+      router.push(`/order-confirmation/${result.orderId || 'success'}`);
+    } catch (err) {
+      console.error(err);
+      setError('Ocurrió un problema al procesar tu pedido.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const isShippingAddressComplete = shippingAddress.address1 && shippingAddress.city && shippingAddress.state && shippingAddress.zip;
+  const isShippingAddressComplete =
+    shippingAddress.address1 && shippingAddress.city && shippingAddress.state && shippingAddress.zip;
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-900">Checkout</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
+        {/* Paso principal */}
         <div className="lg:w-2/3 bg-white shadow-lg rounded-lg p-8">
+          {/* Pasos */}
           <div className="mb-8 flex justify-center gap-4">
             <button
               onClick={() => setCurrentStep(1)}
               className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 1 ? 'bg-blue-600 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'
+                currentStep === 1
+                  ? 'bg-blue-600 text-black'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
               }`}
             >
               1. Envío
             </button>
             <button
               onClick={() => setCurrentStep(2)}
-              className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 2 ? 'bg-blue-600 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
               disabled={!isShippingAddressComplete}
+              className={`px-6 py-2 rounded-full font-semibold ${
+                currentStep === 2
+                  ? 'bg-blue-600 text-black'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               2. Pago
             </button>
             <button
               onClick={() => setCurrentStep(3)}
-              className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 3 ? 'bg-blue-600 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
               disabled={!paymentMethod}
+              className={`px-6 py-2 rounded-full font-semibold ${
+                currentStep === 3
+                  ? 'bg-blue-600 text-black'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               3. Revisar
             </button>
           </div>
 
+          {/* Paso 1 */}
           {currentStep === 1 && (
             <div className="animate-fade-in">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Dirección de Envío</h2>
@@ -100,6 +143,7 @@ const CheckoutPage = () => {
             </div>
           )}
 
+          {/* Paso 2 */}
           {currentStep === 2 && (
             <div className="animate-fade-in">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Método de Pago</h2>
@@ -114,6 +158,7 @@ const CheckoutPage = () => {
             </div>
           )}
 
+          {/* Paso 3 */}
           {currentStep === 3 && (
             <div className="animate-fade-in">
               <h2 className="text-2xl font-bold mb-6 text-gray-800">Revisar Pedido</h2>
@@ -130,7 +175,11 @@ const CheckoutPage = () => {
                 <h3 className="font-semibold mt-4 mb-2">Método de Pago:</h3>
                 <p className="text-black">{paymentMethod || 'No seleccionado'}</p>
               </div>
+
               <OrderSummary items={cartItems} />
+
+              {error && <p className="text-red-600 mt-4">{error}</p>}
+
               <div className="mt-8 flex justify-between">
                 <button
                   onClick={() => setCurrentStep(2)}
@@ -138,15 +187,19 @@ const CheckoutPage = () => {
                 >
                   ← Volver a Pago
                 </button>
+
                 <PlaceOrderButton
                   onPlaceOrder={handlePlaceOrder}
-                  disabled={!isShippingAddressComplete || !paymentMethod}
-                />
+                  disabled={!isShippingAddressComplete || !paymentMethod || loading}
+                >
+                  {loading ? 'Procesando...' : 'Finalizar Pedido'}
+                </PlaceOrderButton>
               </div>
             </div>
           )}
         </div>
 
+        {/* Resumen lateral */}
         <div className="lg:w-1/3 bg-white shadow-lg rounded-lg p-6 h-fit sticky top-4">
           <h2 className="text-2xl font-semibold mb-6 pb-4 border-b text-black">Tu Pedido</h2>
           <CartSummary subtotal={subtotal} shipping={shippingCost} total={total} />
