@@ -1,87 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import products from "@/components/productsData";
+import { useState, useEffect } from "react";
+import ProductList from "@/components/ProductList";
 import { useCart } from "@/context/cartContext";
-import Link from "next/link";
-import Image from "next/image";
 
-export default function HomePage() {
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  precio: number;
+  imageUrl: string;
+}
+
+export default function CatalogoPage() {
   const { addToCart } = useCart();
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleQuantityChange = (index: number, value: number) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [index]: value > 0 ? value : 1,
-    }));
-  };
+  // 🔹 Cargar productos desde la API REST (solo una vez)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/products");
+        if (!res.ok) throw new Error(`Error ${res.status}`);
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("❌ Error cargando productos:", err);
+        setError("No se pudieron cargar los productos. Intenta más tarde.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading)
+    return (
+      <main className="max-w-7xl mx-auto px-4 py-10 text-center">
+        <p className="text-gray-500 text-lg">Cargando productos...</p>
+      </main>
+    );
+
+  if (error)
+    return (
+      <main className="max-w-7xl mx-auto px-4 py-10 text-center">
+        <p className="text-red-600 font-semibold">{error}</p>
+      </main>
+    );
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-center mb-10">Catálogo</h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product) => {
-          //Se elimina index ya que no es usado
-          const quantity = quantities[product.id] || 1; // Cambié index por product.id para usar el ID real
-
-          return (
-            <div
-              key={product.id} // Cambié index por product.id para una clave única
-              className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
-            >
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={500} // ajusta el tamaño según el diseño
-                height={500}
-                className="w-full h-97 object-contain bg-white"
-              />
-              <div className="p-4 flex flex-col items-center text-center">
-                <h2 className="text-lg font-semibold">{product.name}</h2>
-                <p className="text-gray-800 dark:text-gray-200 text-sm mt-2">
-                  {product.category}
-                </p>
-                <p className="text-gray-800 dark:text-gray-200 text-lg font-semibold mt-8">
-                  ${product.precio.toLocaleString()}{" "}
-                  {/* Formateo como moneda */}
-                </p>
-
-                {/* Selector de cantidad */}
-                <div className="flex items-center gap-2 mt-3">
-                  <label className="text-sm">Cantidad:</label>
-                  <input
-                    type="number"
-                    min={1}
-                    value={quantity}
-                    onChange={(e) =>
-                      handleQuantityChange(product.id, parseInt(e.target.value))
-                    }
-                    className="w-16 border rounded text-center"
-                  />
-                </div>
-
-                {/* Botón agregar al carrito */}
-                <button
-                  onClick={() => addToCart(product.id, quantity)} // Corrección aquí
-                  className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg"
-                >
-                  Agregar al carrito
-                </button>
-
-                {/* 👉 Link Ver detalle */}
-                <Link
-                  href={`/catalogo/${product.id}`} // Usar product.id en lugar de index
-                  className="mt-3 text-sm text-blue-200 underline hover:text-yellow-300"
-                >
-                  Ver detalle
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/* ✅ Solo una lista (sin duplicados) */}
+      <ProductList products={products} addToCart={addToCart} />
     </main>
   );
 }

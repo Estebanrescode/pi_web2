@@ -3,6 +3,7 @@ import { useCart } from "@/context/cartContext";
 import Image from "next/image";
 import Link from "next/link";
 
+
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
 
