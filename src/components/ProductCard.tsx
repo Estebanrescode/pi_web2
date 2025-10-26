@@ -8,8 +8,8 @@ import Image from "next/image";
 interface Product {
   id: number;
   name: string;
-  image: string;
-  precio: number;
+  imageUrl: string;
+  price: number;
 }
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
@@ -22,9 +22,9 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <div className="border p-4 rounded shadow">
-      <Image src={product.image} alt={product.name} width={200} height={200} />
+      <Image src={product.imageUrl} alt={product.name} width={200} height={200} />
       <h3 className="font-bold">{product.name}</h3>
-      <p>${product.precio.toLocaleString()}</p>
+      <p>${product.price.toLocaleString()}</p>
       <input
         type="number"
         min="1"

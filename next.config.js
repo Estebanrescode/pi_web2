@@ -2,7 +2,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com"], // habilita tu dominio de imágenes
+    domains: ["res.cloudinary.com", "placehold.co"], // habilita tu dominio de imágenes
   },
 };
 
