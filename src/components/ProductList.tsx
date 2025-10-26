@@ -88,10 +88,11 @@ export default function ProductList() {
 
               <button
                 onClick={() => addToCart(product, quantity)}
-                className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg"
+                className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
               >
                 Agregar al carrito
               </button>
+
 
               <Link
                 href={`/catalogo/${product.id}`}
