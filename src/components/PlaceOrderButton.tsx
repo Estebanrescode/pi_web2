@@ -1,28 +1,54 @@
-'use client';
+"use client";
+import { CartItem } from '@/lib/types';
 
-import React from 'react';
-
-interface PlaceOrderButtonProps {
-  onPlaceOrder: () => void;
-  disabled: boolean;
-  children?: React.ReactNode; // 👈 permite texto dinámico
-}
-
-const PlaceOrderButton: React.FC<PlaceOrderButtonProps> = ({
-  onPlaceOrder,
-  disabled,
-  children,
-}) => {
-  return (
-    <button
-      onClick={onPlaceOrder}
-      disabled={disabled}
-      className={`px-6 py-3 rounded-lg font-bold transition 
-        ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 text-white'}`}
-    >
-      {children || 'Realizar Pedido'} {/* 👈 usa el texto dinámico o el default */}
-    </button>
-  );
+type Props = {
+  userId: string | number | null;
+  addressId: number | null;
+  paymentId: number | null;
+  cartItems: CartItem[];
+  total: number;
 };
 
-export default PlaceOrderButton;
+export default function PlaceOrderButton({ userId, addressId, paymentId, cartItems, total }: Props) {
+  const handlePlaceOrder = async () => {
+    if (!userId || !addressId || !paymentId) {
+      alert('Por favor, completa todos los campos antes de confirmar.');
+      return;
+    }
+
+    const orderData = {
+      userId,
+      shippingAddressId: addressId,
+      paymentMethodId: paymentId,
+      totalAmount: total,
+      orderDetails: cartItems.map((item: CartItem) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    };
+
+    const response = await fetch('http://localhost:8080/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData),
+    });
+
+    if (response.ok) {
+      alert('Pedido realizado con éxito 🎉');
+      localStorage.removeItem('cart');
+      window.location.href = '/';
+    } else {
+      alert('Error al crear el pedido.');
+    }
+  };
+
+  return (
+    <button
+      onClick={handlePlaceOrder}
+      className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-4 rounded-lg transition-transform transform hover:scale-105"
+    >
+      Confirmar pedido
+    </button>
+  );
+}

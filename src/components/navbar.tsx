@@ -16,7 +16,7 @@ import { useCart } from "@/context/cartContext"; // 👈 importamos el contexto
 
 const Navbar = () => {
   const router = useRouter();
-  const { cart } = useCart(); // 👈 obtenemos los productos del carrito
+  const { cartItems } = useCart(); // 👈 obtenemos los productos del carrito
 
   return (
     <div className="flex items-center justify-between p-2 sm:p-3 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl lg:max-w-7xl">
@@ -50,9 +50,9 @@ const Navbar = () => {
             onClick={() => router.push("/cart")}
           />
           {/* Badge con número de items */}
-          {cart.length > 0 && (
+          {cartItems.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-              {cart.length}
+              {cartItems.length}
             </span>
           )}
         </div>

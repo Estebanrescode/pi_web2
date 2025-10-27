@@ -1,31 +1,22 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from "react";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-}
-
-interface Cart extends Product {
-  quantity: number;
-}
+import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
+import { Product, CartItem } from "@/lib/types";
 
 interface CartContextType {
-  cart: Cart[];
+  cartItems: CartItem[];
   addToCart: (product: Product, quantity: number) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
+  total: number; // 👈 agregamos el total aquí
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Cart[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const addToCart = (product: Product, quantity: number) => {
-    setCart((prev) => {
+    setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
@@ -34,18 +25,30 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : item
         );
       }
-      return [...prev, { ...product, quantity }];
+      return [...prev, { ...product, quantity } as CartItem];
     });
   };
 
   const removeFromCart = (id: number) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const clearCart = () => setCart([]);
+  const clearCart = () => setCartItems([]);
+
+  // 🧮 Calculamos el total automáticamente
+  const total = useMemo(
+    () =>
+      cartItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      ),
+    [cartItems]
+  );
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, clearCart, total }}
+    >
       {children}
     </CartContext.Provider>
   );

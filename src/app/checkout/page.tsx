@@ -1,211 +1,187 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import ShippingAddressForm from '@/components/ShippingAddressForm';
-import PaymentMethodForm from '@/components/PaymentMethodForm';
-import OrderSummary from '@/components/OrderSummary';
-import PlaceOrderButton from '@/components/PlaceOrderButton';
-import CartSummary from '@/components/CartSummary';
-import { useRouter } from 'next/navigation';
-import { useCart } from '@/context/cartContext';
+import { useCart } from "@/context/cartContext";
+import { useState } from "react";
 
-interface ShippingAddress {
-  address1: string;
-  city: string;
-  state: string;
-  zip: string;
-}
+export default function CheckoutPage() {
+  const { cartItems, total } = useCart();
 
-const CheckoutPage = () => {
-  const router = useRouter();
-  const { cart, clearCart } = useCart(); // 🔥 Usamos `cart`, no `cartItems`
-
-  const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
-    address1: '',
-    city: '',
-    state: '',
-    zip: '',
+  // 🏠 Estado para la dirección
+  const [direccion, setDireccion] = useState({
+    nombre: "",
+    direccion: "",
+    ciudad: "",
+    codigoPostal: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [currentStep, setCurrentStep] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // 💳 Estado para método de pago
+  const [metodoPago, setMetodoPago] = useState("tarjeta");
 
-  // 🔥 Calcular subtotal en base al `cart`
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingCost = 10000;
-  const total = subtotal + shippingCost;
+  const envio = total > 0 ? 10000 : 0;
+  const totalFinal = total + envio;
 
-  const handlePlaceOrder = async () => {
-    if (!shippingAddress.address1 || !paymentMethod) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const orderData = {
-        items: cart.map(item => ({
-          productId: item.id,
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        shippingAddress,
-        paymentMethod,
-        subtotal,
-        shippingCost,
-        total,
-      };
-
-      const response = await fetch('http://localhost:8080/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log('✅ Pedido procesado:', result);
-
-      clearCart();
-      router.push(`/order-confirmation/${result.orderId || 'success'}`);
-    } catch (err) {
-      console.error(err);
-      setError('Ocurrió un problema al procesar tu pedido.');
-    } finally {
-      setLoading(false);
+  const handleConfirmar = () => {
+    if (!direccion.nombre || !direccion.direccion || !direccion.ciudad) {
+      alert("Por favor completa la dirección de envío");
+      return;
     }
+    alert(`✅ Pedido confirmado. Total: $${totalFinal.toFixed(2)}`);
   };
 
-  const isShippingAddressComplete =
-    shippingAddress.address1 && shippingAddress.city && shippingAddress.state && shippingAddress.zip;
-
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-900">Checkout</h1>
+    <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* ===================== IZQUIERDA ===================== */}
+      <div>
+        <h1 className="text-3xl font-bold mb-6">Checkout</h1>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Paso principal */}
-        <div className="lg:w-2/3 bg-white shadow-lg rounded-lg p-8">
-          {/* Pasos */}
-          <div className="mb-8 flex justify-center gap-4">
-            <button
-              onClick={() => setCurrentStep(1)}
-              className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 1
-                  ? 'bg-blue-600 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              1. Envío
-            </button>
-            <button
-              onClick={() => setCurrentStep(2)}
-              disabled={!isShippingAddressComplete}
-              className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 2
-                  ? 'bg-blue-600 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              2. Pago
-            </button>
-            <button
-              onClick={() => setCurrentStep(3)}
-              disabled={!paymentMethod}
-              className={`px-6 py-2 rounded-full font-semibold ${
-                currentStep === 3
-                  ? 'bg-blue-600 text-black'
-                  : 'bg-gray-200 text-black hover:bg-gray-300'
-              }`}
-            >
-              3. Revisar
-            </button>
+        {/* 🏠 FORMULARIO DIRECCIÓN DE ENVÍO */}
+        <div className="mb-8 border rounded-lg p-5 shadow-sm">
+          <h2 className="font-semibold text-lg mb-4">Dirección de envío</h2>
+          <div className="space-y-3">
+            <input
+              type="text"
+              placeholder="Nombre completo"
+              value={direccion.nombre}
+              onChange={(e) =>
+                setDireccion({ ...direccion, nombre: e.target.value })
+              }
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Dirección"
+              value={direccion.direccion}
+              onChange={(e) =>
+                setDireccion({ ...direccion, direccion: e.target.value })
+              }
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Ciudad"
+              value={direccion.ciudad}
+              onChange={(e) =>
+                setDireccion({ ...direccion, ciudad: e.target.value })
+              }
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Código postal"
+              value={direccion.codigoPostal}
+              onChange={(e) =>
+                setDireccion({ ...direccion, codigoPostal: e.target.value })
+              }
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+            />
+          </div>
+        </div>
+
+        {/* 💳 FORMULARIO MÉTODO DE PAGO */}
+        <div className="border rounded-lg p-5 shadow-sm">
+          <h2 className="font-semibold text-lg mb-4">Método de pago</h2>
+
+          <div className="space-y-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="pago"
+                value="tarjeta"
+                checked={metodoPago === "tarjeta"}
+                onChange={() => setMetodoPago("tarjeta")}
+              />
+              <span>Tarjeta de crédito / débito</span>
+            </label>
+
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="radio"
+                name="pago"
+                value="efectivo"
+                checked={metodoPago === "efectivo"}
+                onChange={() => setMetodoPago("efectivo")}
+              />
+              <span>Pago en efectivo</span>
+            </label>
           </div>
 
-          {/* Paso 1 */}
-          {currentStep === 1 && (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Dirección de Envío</h2>
-              <ShippingAddressForm
-                initialData={shippingAddress}
-                onSubmit={(data: ShippingAddress) => {
-                  setShippingAddress(data);
-                  setCurrentStep(2);
-                }}
+          {metodoPago === "tarjeta" && (
+            <div className="mt-4 space-y-3">
+              <input
+                type="text"
+                placeholder="Número de tarjeta"
+                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
               />
-            </div>
-          )}
-
-          {/* Paso 2 */}
-          {currentStep === 2 && (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Método de Pago</h2>
-              <PaymentMethodForm
-                initialMethod={paymentMethod}
-                onSubmit={(method) => {
-                  setPaymentMethod(method);
-                  setCurrentStep(3);
-                }}
-                onBack={() => setCurrentStep(1)}
-              />
-            </div>
-          )}
-
-          {/* Paso 3 */}
-          {currentStep === 3 && (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800">Revisar Pedido</h2>
-              <div className="mb-6 bg-gray-50 p-4 rounded-md">
-                <h3 className="font-semibold mb-2">Dirección de Envío:</h3>
-                {isShippingAddressComplete ? (
-                  <p className="text-black">
-                    {shippingAddress.address1}, {shippingAddress.city}, {shippingAddress.state}{' '}
-                    {shippingAddress.zip}
-                  </p>
-                ) : (
-                  <p className="text-black">No se ha proporcionado una dirección</p>
-                )}
-                <h3 className="font-semibold mt-4 mb-2">Método de Pago:</h3>
-                <p className="text-black">{paymentMethod || 'No seleccionado'}</p>
-              </div>
-
-              {/* 🔥 Actualizado: pasar `cart` */}
-              <OrderSummary items={cart} />
-
-              {error && <p className="text-red-600 mt-4">{error}</p>}
-
-              <div className="mt-8 flex justify-between">
-                <button
-                  onClick={() => setCurrentStep(2)}
-                  className="px-6 py-3 bg-gray-300 hover:bg-gray-400 text-black font-semibold rounded-lg transition"
-                >
-                  ← Volver a Pago
-                </button>
-
-                <PlaceOrderButton
-                  onPlaceOrder={handlePlaceOrder}
-                  disabled={!isShippingAddressComplete || !paymentMethod || loading}
-                >
-                  {loading ? 'Procesando...' : 'Finalizar Pedido'}
-                </PlaceOrderButton>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  placeholder="MM/AA"
+                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="CVC"
+                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                />
               </div>
             </div>
           )}
         </div>
+      </div>
 
-        {/* Resumen lateral */}
-        <div className="lg:w-1/3 bg-white shadow-lg rounded-lg p-6 h-fit sticky top-4">
-          <h2 className="text-2xl font-semibold mb-6 pb-4 border-b text-black">Tu Pedido</h2>
-          <CartSummary subtotal={subtotal} shipping={shippingCost} total={total} />
+      {/* ===================== DERECHA ===================== */}
+      <div>
+        {/* Resumen del carrito */}
+        <div className="border rounded-lg p-4 mb-4 shadow-sm">
+          <h2 className="text-lg font-semibold mb-3 flex justify-between">
+            <span>Resumen del carrito</span>
+            <span>Total: ${total.toFixed(2)}</span>
+          </h2>
+
+          {cartItems.length === 0 ? (
+            <p className="text-gray-500 text-sm">Tu carrito está vacío 🛒</p>
+          ) : (
+            <ul className="divide-y divide-gray-200">
+              {cartItems.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex justify-between items-center py-2"
+                >
+                  <span>
+                    {item.name} x{item.quantity}
+                  </span>
+                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
+
+        {/* Resumen del pedido */}
+        <div className="border rounded-lg p-4 bg-gray-50 shadow-sm">
+          <h2 className="text-lg font-semibold mb-3">Resumen del pedido</h2>
+          <div className="flex justify-between text-sm mb-2">
+            <span>Subtotal:</span>
+            <span>${total.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between text-sm mb-2">
+            <span>Envío:</span>
+            <span>${envio.toFixed(2)}</span>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between font-semibold text-lg">
+            <span>Total:</span>
+            <span>${totalFinal.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <button
+          className="w-full mt-6 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition"
+          onClick={handleConfirmar}
+        >
+          Confirmar pedido
+        </button>
       </div>
     </div>
   );
-};
-
-export default CheckoutPage;
+}

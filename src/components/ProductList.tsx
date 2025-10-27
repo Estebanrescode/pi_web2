@@ -4,23 +4,30 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cartContext";
+import { Product } from "@/lib/types";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-}
+type ProductListProps = {
+  products?: Product[];
+  addToCart?: (product: Product, quantity: number) => void;
+};
 
-export default function ProductList() {
-  const [products, setProducts] = useState<Product[]>([]);
+export default function ProductList({ products: productsProp, addToCart: addToCartProp }: ProductListProps) {
+  const [products, setProducts] = useState<Product[]>(productsProp ?? []);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(!productsProp);
   const [error, setError] = useState<string | null>(null);
-  const { addToCart } = useCart();
+  const cart = useCart();
+  const addToCart = addToCartProp ?? cart.addToCart;
 
   useEffect(() => {
+    if (productsProp) {
+      const initialQuantities: { [key: number]: number } = {};
+      productsProp.forEach((p) => (initialQuantities[p.id] = 1));
+      setQuantities(initialQuantities);
+      setLoading(false);
+      return;
+    }
+
     const fetchProducts = async () => {
       try {
         const res = await fetch("http://localhost:8080/api/products");
@@ -41,7 +48,7 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, []);
+  }, [productsProp]);
 
   const handleQuantityChange = (productId: number, value: number) => {
     setQuantities((prev) => ({
@@ -60,7 +67,7 @@ export default function ProductList() {
         return (
           <div key={product.id} className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
             <Image
-              src={product.imageUrl || "https://placehold.co/600x400"}
+              src={product.imageUrl ?? "https://placehold.co/600x400"}
               alt={product.name}
               width={500}
               height={500}
@@ -92,8 +99,6 @@ export default function ProductList() {
               >
                 Agregar al carrito
               </button>
-
-
 
               <Link
                 href={`/catalogo/${product.id}`}

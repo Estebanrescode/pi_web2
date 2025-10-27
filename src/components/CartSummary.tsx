@@ -1,28 +1,24 @@
 import React from 'react';
+import { CartItem } from '@/lib/types';
 
-interface CartSummaryProps {
-  subtotal: number;
-  shipping: number;
+type Props = {
+  cartItems: CartItem[];
   total: number;
-}
-
-const CartSummary: React.FC<CartSummaryProps> = ({ subtotal, shipping, total }) => {
-  return (
-    <div className="space-y-4">
-      <div className="flex justify-between">
-        <span className="text-black">Subtotal</span>
-        <span className="text-black">${subtotal.toFixed(2)}</span>
-      </div>
-      <div className="flex justify-between">
-        <span className="text-black">Envío</span>
-        <span className="text-black">${shipping.toFixed(2)}</span>
-      </div>
-      <div className="flex justify-between font-bold border-t pt-2">
-        <span className="text-black">Total</span>
-        <span className="text-black">${total.toFixed(2)}</span>
-      </div>
-    </div>
-  );
 };
 
-export default CartSummary;
+export default function CartSummary({ cartItems, total }: Props) {
+  return (
+    <div className="border rounded-lg p-4 bg-white mb-4">
+      <h2 className="text-lg font-semibold mb-2">Resumen del carrito</h2>
+      <ul>
+        {cartItems.map((item, index) => (
+          <li key={index} className="flex justify-between mb-2">
+            <span>{item.name} x {item.quantity}</span>
+            <span>${(item.price * item.quantity).toFixed(2)}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="font-bold text-lg text-right">Total: ${total.toFixed(2)}</div>
+    </div>
+  );
+}

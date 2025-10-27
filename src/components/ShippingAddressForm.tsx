@@ -1,102 +1,38 @@
-// src/components/ShippingAddressForm.tsx
-import React, { useState } from 'react';
+import React from 'react';
 
-interface ShippingAddress {
-  address1: string;
+type Address = {
+  id: number;
+  street: string;
   city: string;
-  state: string;
-  zip: string;
-}
-
-interface ShippingAddressFormProps {
-  initialData: ShippingAddress;
-  onSubmit: (data: ShippingAddress) => void;
-}
-
-const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({ initialData, onSubmit }) => {
-  const [formData, setFormData] = useState<ShippingAddress>(initialData);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validar que todos los campos estén completos
-    if (!formData.address1 || !formData.city || !formData.state || !formData.zip) {
-      alert('Por favor completa todos los campos');
-      return;
-    }
-    onSubmit(formData);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="address1" className="block text-sm font-medium text-black">
-          Dirección
-        </label>
-        <input
-          type="text"
-          id="address1"
-          name="address1"
-          value={formData.address1}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-          placeholder="Calle y número"
-        />
-      </div>
-      <div>
-        <label htmlFor="city" className="block text-sm font-medium text-black">
-          Ciudad
-        </label>
-        <input
-          type="text"
-          id="city"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-          placeholder="Ciudad"
-        />
-      </div>
-      <div>
-        <label htmlFor="state" className="block text-sm font-medium text-black">
-          Estado
-        </label>
-        <input
-          type="text"
-          id="state"
-          name="state"
-          value={formData.state}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-          placeholder="Estado"
-        />
-      </div>
-      <div>
-        <label htmlFor="zip" className="block text-sm font-medium text-black">
-          Código postal
-        </label>
-        <input
-          type="text"
-          id="zip"
-          name="zip"
-          value={formData.zip}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-black"
-          placeholder="Código postal"
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Continuar
-      </button>
-    </form>
-  );
+  country: string;
 };
 
-export default ShippingAddressForm;
+type Props = {
+  addresses: Address[];
+  selectedAddress: number | null;
+  setSelectedAddress: (id: number | null) => void;
+};
+
+export default function ShippingAddressForm({ addresses, selectedAddress, setSelectedAddress }: Props) {
+  return (
+    <div className="mb-6">
+      <h2 className="text-lg font-semibold mb-2">Dirección de envío</h2>
+      {addresses.length > 0 ? (
+        <select
+          className="w-full border rounded p-2"
+          value={selectedAddress ?? ''}
+          onChange={e => setSelectedAddress(e.target.value ? Number(e.target.value) : null)}
+        >
+          <option value="">Seleccione una dirección</option>
+          {addresses.map((addr) => (
+            <option key={addr.id} value={addr.id}>
+              {addr.street}, {addr.city}, {addr.country}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <p className="text-sm text-gray-500">No tienes direcciones guardadas.</p>
+      )}
+    </div>
+  );
+}
