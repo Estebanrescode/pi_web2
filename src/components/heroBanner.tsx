@@ -7,8 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { Button } from "./ui/Button";
-
-
+import Link from "next/link";
 
 const slides = [
   {
@@ -81,10 +80,13 @@ export default function HeroCarousel() {
                   {slide.desc}
                 </p>
                 <div className="mt-6 flex gap-4">
-                  <Button className="bg-white text-black font-semibold hover:bg-gray-200">
-                    Comprar Ahora
-                  </Button>
-                  <Button
+                  <Link href="/catalogo">
+                    <Button className=" bg-orange-500 hover:bg-orange-600 text-white
+                        dark:bg-violet-500 dark:hover:bg-violet-600">
+                      Comprar Ahora
+                    </Button>
+                  </Link>
+                  {/* <Button
                     variant="outline"
                     className="
                       text-gray-800 border-gray-800 hover:bg-gray-200
@@ -92,7 +94,7 @@ export default function HeroCarousel() {
                     "
                   >
                     Ver Colección
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>

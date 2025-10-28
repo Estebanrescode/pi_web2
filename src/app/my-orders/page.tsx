@@ -4,7 +4,6 @@ import { useUser, SignInButton } from "@clerk/nextjs";
 type Product = {
   id: number;
   name: string;
-  // campos opcionales que tu API pueda devolver
   image?: string;
   price?: number;
 };
