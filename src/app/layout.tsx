@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
@@ -9,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider } from "@/context/cartContext";
 import { OrderProvider } from "@/context/orderContext";
+import { FavoritesProvider } from "@/context/favoritesContext"; // 👈 nuevo
 import { Suspense } from "react";
 
 const urbanist = Urbanist({
@@ -37,19 +37,17 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {/* 🔹 Contextos globales */}
             <CartProvider>
               <OrderProvider>
-                {/* 🔹 Navbar dentro de Suspense */}
-                <Suspense fallback={<NavbarFallback />}>
-                  <Navbar />
-                </Suspense>
+                <FavoritesProvider>
+                  <Suspense fallback={<NavbarFallback />}>
+                    <Navbar />
+                  </Suspense>
 
-                {/* 🔹 Contenido principal */}
-                <main>{children}</main>
+                  <main>{children}</main>
 
-                {/* 🔹 Footer */}
-                <Footer />
+                  <Footer />
+                </FavoritesProvider>
               </OrderProvider>
             </CartProvider>
           </ThemeProvider>
@@ -61,5 +59,5 @@ export default function RootLayout({
 
 /** 🔸 Fallback mientras carga el Navbar en cliente */
 function NavbarFallback() {
-  return <div className="h-16" />; // altura del navbar
+  return <div className="h-16" />;
 }

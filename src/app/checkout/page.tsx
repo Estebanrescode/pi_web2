@@ -32,11 +32,13 @@ export default function CheckoutPage() {
     <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* ===================== IZQUIERDA ===================== */}
       <div>
-        <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+        <h1 className="text-3xl font-bold mb-6 dark:text-white">Checkout</h1>
 
         {/* 🏠 FORMULARIO DIRECCIÓN DE ENVÍO */}
-        <div className="mb-8 border rounded-lg p-5 shadow-sm">
-          <h2 className="font-semibold text-lg mb-4">Dirección de envío</h2>
+        <div className="mb-8 border rounded-lg p-5 shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700">
+          <h2 className="font-semibold text-lg mb-4 dark:text-white">
+            Dirección de envío
+          </h2>
           <div className="space-y-3">
             <input
               type="text"
@@ -45,7 +47,8 @@ export default function CheckoutPage() {
               onChange={(e) =>
                 setDireccion({ ...direccion, nombre: e.target.value })
               }
-              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                         dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
             <input
               type="text"
@@ -54,7 +57,8 @@ export default function CheckoutPage() {
               onChange={(e) =>
                 setDireccion({ ...direccion, direccion: e.target.value })
               }
-              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                         dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
             <input
               type="text"
@@ -63,7 +67,8 @@ export default function CheckoutPage() {
               onChange={(e) =>
                 setDireccion({ ...direccion, ciudad: e.target.value })
               }
-              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                         dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
             <input
               type="text"
@@ -72,16 +77,19 @@ export default function CheckoutPage() {
               onChange={(e) =>
                 setDireccion({ ...direccion, codigoPostal: e.target.value })
               }
-              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                         dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
             />
           </div>
         </div>
 
         {/* 💳 FORMULARIO MÉTODO DE PAGO */}
-        <div className="border rounded-lg p-5 shadow-sm">
-          <h2 className="font-semibold text-lg mb-4">Método de pago</h2>
+        <div className="border rounded-lg p-5 shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700">
+          <h2 className="font-semibold text-lg mb-4 dark:text-white">
+            Método de pago
+          </h2>
 
-          <div className="space-y-3">
+          <div className="space-y-3 dark:text-gray-200">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
@@ -110,18 +118,21 @@ export default function CheckoutPage() {
               <input
                 type="text"
                 placeholder="Número de tarjeta"
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                           dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
               />
               <div className="flex gap-3">
                 <input
                   type="text"
                   placeholder="MM/AA"
-                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                             dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                 />
                 <input
                   type="text"
                   placeholder="CVC"
-                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none"
+                  className="w-1/2 border rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none
+                             dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                 />
               </div>
             </div>
@@ -132,20 +143,22 @@ export default function CheckoutPage() {
       {/* ===================== DERECHA ===================== */}
       <div>
         {/* Resumen del carrito */}
-        <div className="border rounded-lg p-4 mb-4 shadow-sm">
-          <h2 className="text-lg font-semibold mb-3 flex justify-between">
+        <div className="border rounded-lg p-4 mb-4 shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700">
+          <h2 className="text-lg font-semibold mb-3 flex justify-between dark:text-white">
             <span>Resumen del carrito</span>
             <span>Total: ${total.toFixed(2)}</span>
           </h2>
 
           {cartItems.length === 0 ? (
-            <p className="text-gray-500 text-sm">Tu carrito está vacío 🛒</p>
+            <p className="text-gray-500 text-sm dark:text-gray-400">
+              Tu carrito está vacío 🛒
+            </p>
           ) : (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {cartItems.map((item) => (
                 <li
                   key={item.id}
-                  className="flex justify-between items-center py-2"
+                  className="flex justify-between items-center py-2 text-gray-800 dark:text-gray-200"
                 >
                   <span>
                     {item.name} x{item.quantity}
@@ -158,25 +171,28 @@ export default function CheckoutPage() {
         </div>
 
         {/* Resumen del pedido */}
-        <div className="border rounded-lg p-4 bg-gray-50 shadow-sm">
-          <h2 className="text-lg font-semibold mb-3">Resumen del pedido</h2>
-          <div className="flex justify-between text-sm mb-2">
+        <div className="border rounded-lg p-4 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-sm">
+          <h2 className="text-lg font-semibold mb-3 dark:text-white">
+            Resumen del pedido
+          </h2>
+          <div className="flex justify-between text-sm mb-2 text-gray-700 dark:text-gray-300">
             <span>Subtotal:</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between text-sm mb-2">
+          <div className="flex justify-between text-sm mb-2 text-gray-700 dark:text-gray-300">
             <span>Envío:</span>
             <span>${envio.toFixed(2)}</span>
           </div>
-          <hr className="my-2" />
-          <div className="flex justify-between font-semibold text-lg">
+          <hr className="my-2 border-gray-300 dark:border-gray-600" />
+          <div className="flex justify-between font-semibold text-lg text-gray-900 dark:text-white">
             <span>Total:</span>
             <span>${totalFinal.toFixed(2)}</span>
           </div>
         </div>
 
         <button
-          className="w-full mt-6 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition"
+          className="w-full mt-6 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition
+                     dark:hover:bg-yellow-400 dark:bg-yellow-500 dark:text-black"
           onClick={handleConfirmar}
         >
           Confirmar pedido
