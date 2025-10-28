@@ -3,14 +3,7 @@
 import { useState, useEffect } from "react";
 import ProductList from "@/components/ProductList";
 import { useCart } from "@/context/cartContext";
-
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  precio: number;
-  imageUrl: string;
-}
+import { Product } from "@/lib/types";
 
 export default function CatalogoPage() {
   const { addToCart } = useCart();

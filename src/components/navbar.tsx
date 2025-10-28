@@ -1,5 +1,5 @@
 "use client";
-import { Heart, ShoppingCart} from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import MenuList from "./menu-list";
 import ItemsMenuMobile from "./items-menu-mobile";
@@ -12,11 +12,13 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
-import { useCart } from "@/context/cartContext"; // 👈 importamos el contexto
+import { useCart } from "@/context/cartContext";
+import { useFavorites } from "@/context/favoritesContext"; // 👈 Nuevo contexto
 
 const Navbar = () => {
   const router = useRouter();
-  const { cart } = useCart(); // 👈 obtenemos los productos del carrito
+  const { cartItems } = useCart();
+  const { favoriteItems } = useFavorites(); // 👈 Productos favoritos
 
   return (
     <div className="flex items-center justify-between p-2 sm:p-3 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl lg:max-w-7xl">
@@ -43,26 +45,35 @@ const Navbar = () => {
 
       {/* Iconos y botones */}
       <div className="flex items-center justify-between gap-2 sm:gap-5">
+        {/* 🛒 Carrito */}
         <div className="relative">
           <ShoppingCart
             strokeWidth={1.5}
-            className="w-5 h-5 cursor-pointer"
+            className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors"
             onClick={() => router.push("/cart")}
           />
-          {/* Badge con número de items */}
-          {cart.length > 0 && (
+          {cartItems.length > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
-              {cart.length}
+              {cartItems.length}
             </span>
           )}
         </div>
 
-        <Heart
-          strokeWidth={1.5}
-          className="w-5 h-5 cursor-pointer"
-          onClick={() => router.push("/loved-products")}
-        />
+        {/* ❤️ Favoritos */}
+        <div className="relative">
+          <Heart
+            strokeWidth={1.5}
+            className="w-5 h-5 cursor-pointer hover:text-pink-500 transition-colors"
+            onClick={() => router.push("/favoritos")}
+          />
+          {favoriteItems.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {favoriteItems.length}
+            </span>
+          )}
+        </div>
 
+        {/* 👤 Sesión */}
         <div className="flex items-center gap-2">
           <SignedOut>
             <SignInButton>
