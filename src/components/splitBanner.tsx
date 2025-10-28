@@ -19,7 +19,7 @@ export default function SplitBanner() {
             Camisetas
           </h2>
           <Link
-            href="/camisetas"
+            href="/catalogo"
             className="
               inline-block px-6 py-3 font-semibold rounded-lg shadow-md transition-all
               bg-orange-500 hover:bg-orange-600 text-white
@@ -45,7 +45,7 @@ export default function SplitBanner() {
             Buzos
           </h2>
           <Link
-            href="/buzos"
+            href="/catalogo"
             className="
               inline-block px-6 py-3 font-semibold rounded-lg shadow-md transition-all
               bg-orange-500 hover:bg-orange-600 text-white

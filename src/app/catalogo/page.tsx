@@ -5,6 +5,7 @@ import ProductList from "@/components/ProductList";
 import { useCart } from "@/context/cartContext";
 import { Product } from "@/lib/types";
 
+
 export default function CatalogoPage() {
   const { addToCart } = useCart();
   const [products, setProducts] = useState<Product[]>([]);

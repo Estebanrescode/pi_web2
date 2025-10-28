@@ -15,15 +15,15 @@ export default function Home() {
       <CategoryBanner
         title="Pantalones"
         image="https://res.cloudinary.com/ddzetix8t/image/upload/BannerPantalones_f46zim"
-        link="/camisetas"
-        buttonLabel="Ver Camisetas"
+        link="/catalogo"
+        buttonLabel="Ver Pantalones"
         position="center 5%"   // 👈 otra posición
       />
       <FeaturedProducts />
       <CategoryBanner
         title="Accesorios"
         image="https://res.cloudinary.com/ddzetix8t/image/upload/BannerAccesorios_s1qb1u"
-        link="/accesorios"
+        link="/catalogo"
         buttonLabel="Ver Accesorios"
         position="center 30%"   // 👈 ajustas la parte visible
       />

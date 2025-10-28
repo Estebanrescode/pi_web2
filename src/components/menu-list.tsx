@@ -38,13 +38,13 @@ export const MenuList = () => {
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/catalogo?category=camisetas" title="Camisetas">
+              <ListItem href="/catalogo" title="Camisetas">
                 Camisetas para todos los gustos y estilos.
               </ListItem>
-              <ListItem href="/catalogo?category=buzos" title="Buzos">
+              <ListItem href="/catalogo" title="Buzos">
                 Variedad de buzos con estilos urbanos.
               </ListItem>
-              <ListItem href="/catalogo?category=pantalones" title="Pantalones">
+              <ListItem href="/catalogo" title="Pantalones">
                 Pantalones cómodos y modernos.
               </ListItem>
             </ul>
@@ -82,7 +82,7 @@ export const MenuList = () => {
         {/* Otros enlaces */}
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/catalogo?category=accesorios">Accesorios</Link>
+            <Link href="/catalogo">Accesorios</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

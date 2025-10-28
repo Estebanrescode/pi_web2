@@ -14,19 +14,19 @@ const ItemsMenuMobile = () => {
         <Link href="/catalogo" className="block">
           Ver todo
         </Link>
-        <Link href="/catalogo?category=buzos" className="block">
+        <Link href="/catalogo" className="block">
           Buzos
         </Link>
-        <Link href="/catalogo?category=camisas" className="block">
+        <Link href="/catalogo" className="block">
           Camisetas
         </Link>
-        <Link href="/catalogo?category=pantalones" className="block">
+        <Link href="/catalogo" className="block">
           Pantalones
         </Link>
-        <Link href="/catalogo?category=accesorios" className="block">
+        <Link href="/catalogo" className="block">
           Accesorios
         </Link>
-        <Link href="/catalogo?category=destacados" className="block">
+        <Link href="/catalogo" className="block">
           Destacados
         </Link>
       </PopoverContent>
