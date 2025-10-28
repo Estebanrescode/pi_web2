@@ -4,23 +4,37 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cartContext";
+import { Product } from "@/lib/types";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-}
+type ProductListProps = {
+  products?: Product[];
+  addToCart?: (product: Product, quantity: number) => void;
+  onRemoveFavorite?: (id: number) => void; // 👈 nuevo: para eliminar desde favoritos
+  isFavoritesPage?: boolean; // 👈 nuevo: para identificar la página
+};
 
-export default function ProductList() {
-  const [products, setProducts] = useState<Product[]>([]);
+export default function ProductList({
+  products: productsProp,
+  addToCart: addToCartProp,
+  onRemoveFavorite,
+  isFavoritesPage = false,
+}: ProductListProps) {
+  const [products, setProducts] = useState<Product[]>(productsProp ?? []);
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(!productsProp);
   const [error, setError] = useState<string | null>(null);
-  const { addToCart } = useCart();
+  const cart = useCart();
+  const addToCart = addToCartProp ?? cart.addToCart;
 
   useEffect(() => {
+    if (productsProp) {
+      const initialQuantities: { [key: number]: number } = {};
+      productsProp.forEach((p) => (initialQuantities[p.id] = 1));
+      setQuantities(initialQuantities);
+      setLoading(false);
+      return;
+    }
+
     const fetchProducts = async () => {
       try {
         const res = await fetch("http://localhost:8080/api/products");
@@ -41,7 +55,7 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, []);
+  }, [productsProp]);
 
   const handleQuantityChange = (productId: number, value: number) => {
     setQuantities((prev) => ({
@@ -50,7 +64,23 @@ export default function ProductList() {
     }));
   };
 
-  if (loading) return <p className="text-center text-gray-700">Cargando productos...</p>;
+  // 💛 Agregar producto a favoritos
+  const addToFavorites = (product: Product) => {
+    const storedFavorites = localStorage.getItem("favorites");
+    const favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+    const exists = favorites.some((item: Product) => item.id === product.id);
+
+    if (!exists) {
+      const updatedFavorites = [...favorites, product];
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      alert(`${product.name} fue agregado a tus favoritos ⭐`);
+    } else {
+      alert("Este producto ya está en tus favoritos.");
+    }
+  };
+
+  if (loading)
+    return <p className="text-center text-gray-700">Cargando productos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
@@ -58,14 +88,20 @@ export default function ProductList() {
       {products.map((product) => {
         const quantity = quantities[product.id] || 1;
         return (
-          <div key={product.id} className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+          <div
+            key={product.id}
+            className="bg-orange-600 dark:bg-violet-700 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow relative"
+          >
+            {/* Imagen */}
             <Image
-              src={product.imageUrl || "https://placehold.co/600x400"}
+              src={product.imageUrl ?? "https://placehold.co/600x400"}
               alt={product.name}
               width={500}
               height={500}
               className="w-full h-97 object-contain bg-white"
             />
+
+            {/* Contenido */}
             <div className="p-4 flex flex-col items-center text-center">
               <h2 className="text-lg font-semibold">{product.name}</h2>
               <p className="text-gray-200 text-sm mt-2">{product.description}</p>
@@ -73,27 +109,49 @@ export default function ProductList() {
                 ${product.price?.toLocaleString() ?? "0"}
               </p>
 
-              <div className="flex items-center gap-2 mt-3">
-                <label className="text-sm">Cantidad:</label>
-                <input
-                  type="number"
-                  min={1}
-                  value={quantity}
-                  onChange={(e) =>
-                    handleQuantityChange(product.id, parseInt(e.target.value))
-                  }
-                  className="w-16 border rounded text-center"
-                />
-              </div>
+              {/* Controles */}
+              {!isFavoritesPage && (
+                <div className="flex items-center gap-2 mt-3">
+                  <label className="text-sm">Cantidad:</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(product.id, parseInt(e.target.value))
+                    }
+                    className="w-16 border rounded text-center"
+                  />
+                </div>
+              )}
 
-              <button
-                onClick={() => addToCart(product, quantity)}
-                className="mt-4 bg-white hover:bg-yellow-300 text-black px-4 py-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
-              >
-                Agregar al carrito
-              </button>
+              {/* Botones dinámicos */}
+              {isFavoritesPage ? (
+                <button
+                  onClick={() => onRemoveFavorite?.(product.id)}
+                  className="mt-4 bg-white active:scale-95 active:bg-yellow-200 hover:bg-yellow-300 text-black px-4 py-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                >
+                  Quitar de favoritos ❌
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => addToCart(product, quantity)}
+                    className="mt-4 bg-white active:scale-95 active:bg-yellow-200 hover:bg-yellow-300 text-black px-4 py-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                  >
+                    Agregar al carrito
+                  </button>
 
+                  <button
+                    onClick={() => addToFavorites(product)}
+                    className="mt-4 bg-white active:scale-95 active:bg-yellow-200 hover:bg-yellow-300 text-black px-4 py-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-lg"
+                  >
+                    ❤️ Agregar a favoritos
+                  </button>
+                </>
+              )}
 
+              {/* Enlace a detalle */}
               <Link
                 href={`/catalogo/${product.id}`}
                 className="mt-3 text-sm text-blue-200 underline hover:text-yellow-300"

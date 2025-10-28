@@ -4,25 +4,19 @@
 import React, { useState } from "react";
 import { useCart } from "@/context/cartContext";
 import Image from "next/image";
-
-interface Product {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-}
+import { Product } from "@/lib/types";
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    addToCart(product.id, quantity);
+    addToCart(product, quantity);
   };
 
   return (
     <div className="border p-4 rounded shadow">
-      <Image src={product.imageUrl} alt={product.name} width={200} height={200} />
+      <Image src={product.imageUrl ?? "/placeholder.png"} alt={product.name} width={200} height={200} />
       <h3 className="font-bold">{product.name}</h3>
       <p>${product.price.toLocaleString()}</p>
       <input

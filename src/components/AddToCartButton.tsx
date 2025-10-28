@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "@/context/cartContext";
-
-interface Product {
-  id: number;
-  name: string;
-  price?: number;
-  precio?: number;
-  image?: string;
-}
+import { Product } from "@/lib/types";
 
 export default function AddToCart({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -17,7 +10,7 @@ export default function AddToCart({ product }: { product: Product }) {
 
   const handleAdd = () => {
     if (!product) return;
-    addToCart(product, quantity); // ✅ pasa el objeto completo
+    addToCart(product, quantity);
   };
 
   return (
